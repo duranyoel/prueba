@@ -25,7 +25,8 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<History>>> GetHistory()
         {
-            return await _context.History.ToListAsync();
+            
+            return await _context.History.OrderByDescending(x => x.fecha).Take(5).ToListAsync();
         }
 
         // GET: api/Histories/5

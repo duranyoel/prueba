@@ -27,19 +27,24 @@ namespace backend.Controllers
         public string Get(string ciudad)
         {
             string url = "";
+            string url1 = "";
             var json = "";
+            var json1 = "";
             if (ciudad.ToString() ==null)
             {
                 url = "http://api.openweathermap.org/data/2.5/weather?q=London&appid=2b4400b1f69af9df341160d7be8fcff8";
+                url1 = "https://newsapi.org/v2/everything?q=london&apiKey=27c9d9bb462c4ce2a2550ce4dc91760c";
             }
             else
             {
                 url = "http://api.openweathermap.org/data/2.5/weather?q=" + ciudad + "&appid=2b4400b1f69af9df341160d7be8fcff8";
+                url1 = "https://newsapi.org/v2/everything?q="+ciudad+"&apiKey=27c9d9bb462c4ce2a2550ce4dc91760c";
             }
 
             try
             {
                 json = new WebClient().DownloadString(url);
+                json1 = new WebClient().DownloadString(url1);
             }
             catch (WebException e)
             {
@@ -50,8 +55,8 @@ namespace backend.Controllers
                 }
                 
             }
-            
-            return json.ToString();
+            var final ="["+json+","+ json1+"]";
+            return final.ToString();
         }
 
         // POST api/<WheatherController>

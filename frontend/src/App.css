@@ -38,10 +38,31 @@
 }
 
 .paper{
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: auto;
   margin: auto;
   margin-top: 50px;
   padding-top: 20px;
   padding-left: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+.media {
+    height: 0;
+    padding-top: 56.25%; 
+  }
+.card{
+  margin: 15px;
+}
+
+ul{
+  list-style: none;
+}
+.recientes{
+  float: left;
+  width: 300px;
+}
+.formulario{
+  float: left;
+  width: 300px;
 }
