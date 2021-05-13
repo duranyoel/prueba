@@ -9,9 +9,13 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Historial from './../Historial/Historial';
+import moment from 'moment';
+
 
 const baseUrl = 'https://localhost:44340/api/';
 function Inicio() {
+
+
     const [valor, setValor] = useState({
         name: ''
     });
@@ -20,39 +24,37 @@ function Inicio() {
     const [typecity, settypecity] = useState("");
     const [city, setcity] = useState("Caracas");
     const [desc, setDesc] = useState("");
-    const [currentDate, setCurrentDate] = useState('');
-    const [historial, setHistorial] = useState('');
-
 
 
     const [history, setHistory] = useState({
         ciudad: '',
         info: '',
-        fecha: Date.now()
+        fecha: moment().format()
     })
 
     const handleChange = e => {
         const { name, value } = e.target;
+        
         setHistory(prevState => ({
             ...prevState,
             [name]: value
         }))
         settypecity(e.target.value)
-        //console.log(history);
+
+        console.log(history);
     }
 
 
     const peticionPost = async () => {
         await axios.post(baseUrl + `histories`, history)
             .then(response => {
-                
 
             })
     }
     const citySelect = (e) => {
         e.preventDefault();
         setcity(typecity);
-        
+
     };
 
     useEffect(() => {
@@ -64,18 +66,8 @@ function Inicio() {
             settemp(res.data[0].main);
             setDesc(res.data[0].weather[0].description);
             setNoticias(res.data[1].articles);
+            
 
-
-            var date = new Date().getDate(); //Current Date
-            var month = new Date().getMonth() + 1; //Current Month
-            var year = new Date().getFullYear(); //Current Year
-            var hours = new Date().getHours(); //Current Hours
-            var min = new Date().getMinutes(); //Current Minutes
-            var sec = new Date().getSeconds(); //Current Seconds
-            setCurrentDate(
-                date + '/' + month + '/' + year
-                + ' ' + hours + ':' + min + ':' + sec
-            );
 
         }).catch(result => {
 
@@ -84,14 +76,13 @@ function Inicio() {
 
     return (
         <Paper className='paper'>
+            <h2>Aplicación de clima y noticias</h2>
             <form onSubmit={citySelect} className='formulario'>
                 <h4>Buscar:</h4>
                 <TextField placeholder="Ciudad?"
                     value={typecity} name="ciudad"
                     onChange={handleChange} />
-                <TextField
-                    value={currentDate} type="hidden" name="fecha" onChange={handleChange}
-                />
+
                 <Button type="submit" onClick={() => peticionPost()}>
                     <SendIcon />
                 </Button>
@@ -101,7 +92,7 @@ function Inicio() {
                 <h4>Recientes</h4>
                 <Historial />
             </div>
-            
+
             <h3>Resultado</h3>
             <h4>Clima</h4>
             <p>Ciudad: {valor.name}</p>

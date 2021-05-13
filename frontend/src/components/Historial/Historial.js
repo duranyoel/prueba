@@ -3,17 +3,20 @@ import axios from 'axios';
 import { Button} from '@material-ui/core';
 
 const baseUrl = 'https://localhost:44340/api/';
-function Historial() {
+function Historial(props) {
     const [data, setData] = useState([]);
     
-    const [city, setcity] = useState("");
     
+
+    const peticionGet=async()=>{
+        await axios.get(baseUrl + `histories`)
+        .then(response=>{
+          setData(response.data);
+        })
+      }
     
     useEffect(() => {
-         axios.get(baseUrl + `histories`)
-            .then(response => {
-                setData(response.data);
-            })
+        peticionGet();
       }, []);
     
 
@@ -21,7 +24,7 @@ function Historial() {
         <div>
             <Fragment>
                 <ul>
-                    {data.map(item => (<li key={item.id}> <Button>{item.ciudad}</Button> </li> ))}
+                    {data.map(item => (<li key={item.id}> <Button >{item.ciudad}</Button> </li> ))}
                    
                 </ul>
             </Fragment>
